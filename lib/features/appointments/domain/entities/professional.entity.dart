@@ -10,7 +10,7 @@ class ProfessionalEntity {
   final DateTime? deletedAt;
   final DateTime? deactivatedAt;
   final String? organizationId;
-  final String? barberShopId;
+  final String? clinicId;
   final bool isActive;
 
   ProfessionalEntity({
@@ -26,7 +26,7 @@ class ProfessionalEntity {
     required this.isActive,
     this.deactivatedAt,
     this.organizationId,
-    this.barberShopId,
+    this.clinicId,
   });
 
   factory ProfessionalEntity.fromJson(Map<String, dynamic> json) {
@@ -43,7 +43,7 @@ class ProfessionalEntity {
           ? DateTime.parse(json['deactivatedAt'] as String)
           : null,
       organizationId: json['organizationId'] as String?,
-      barberShopId: json['barberShopId'] as String?,
+      clinicId: json['clinicId'] as String?,
       deletedAt: json['deletedAt'] != null
           ? DateTime.parse(json['deletedAt'] as String)
           : null,
@@ -63,7 +63,7 @@ class ProfessionalEntity {
       'deletedAt': deletedAt?.toIso8601String(),
       'deactivatedAt': deactivatedAt?.toIso8601String(),
       'organizationId': organizationId,
-      'barberShopId': barberShopId,
+      'clinicId': clinicId,
       'isActive': isActive,
     };
   }

@@ -6,7 +6,7 @@ class CategoryEntity {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
-  final String barberShopId;
+  final String clinicId;
   final List<ConsultEntity> consults;
 
   CategoryEntity({
@@ -15,7 +15,7 @@ class CategoryEntity {
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
-    required this.barberShopId,
+    required this.clinicId,
     this.consults = const [],
   });
 
@@ -27,8 +27,8 @@ class CategoryEntity {
   factory CategoryEntity.fromJson(Map<String, dynamic> fullJson) {
     var consultsJson = fullJson['consults'] as List<dynamic>? ?? [];
 
-    List<ConsultEntity> consults = consultsJson.map((serviceJson) {
-      return ConsultEntity.fromJson(serviceJson);
+    List<ConsultEntity> consults = consultsJson.map((consultJson) {
+      return ConsultEntity.fromJson(consultJson);
     }).toList();
 
     return CategoryEntity(
@@ -39,7 +39,7 @@ class CategoryEntity {
       deletedAt: fullJson['deletedAt'] != null
           ? DateTime.parse(fullJson['deletedAt'])
           : null,
-      barberShopId: fullJson['barberShopId'],
+      clinicId: fullJson['clinicId'],
       consults: consults,
     );
   }
@@ -51,7 +51,7 @@ class CategoryEntity {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'deletedAt': deletedAt?.toIso8601String(),
-      'barberShopId': barberShopId,
+      'clinicId': clinicId,
       'consults': consults.map((consult) => consult.toJson()).toList(),
     };
   }

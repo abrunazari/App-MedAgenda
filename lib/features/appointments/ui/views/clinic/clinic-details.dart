@@ -1,4 +1,5 @@
 import 'package:app_medagenda/core/constants/color.dart';
+import 'package:app_medagenda/core/routes/app-routes.dart';
 import 'package:app_medagenda/core/utils/format-currency.dart';
 import 'package:app_medagenda/core/utils/format-duration.dart';
 import 'package:app_medagenda/core/widgets/layout.dart';
@@ -6,6 +7,7 @@ import 'package:app_medagenda/features/appointments/domain/entities/consult.enti
 import 'package:app_medagenda/features/appointments/ui/controllers/clinic-details-controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
   const ClinicDetailsContainer({super.key});
@@ -40,13 +42,13 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
           ),
         );
       } else {
-        var barberShop = controller.clinicEntity.value;
+        var clinic = controller.clinicEntity.value;
         return CustomScrollView(
           slivers: [
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  var category = barberShop!.categories[index];
+                  var category = clinic!.categories[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Column(
@@ -74,16 +76,16 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Column(
                             children: [
-                              ...category.consults.map((service) {
+                              ...category.consults.map((consult) {
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 16.0),
                                   child: ListTile(
                                     title: Text(
-                                      service.name,
+                                      consult.name,
                                       style: const TextStyle(fontSize: 20),
                                     ),
                                     subtitle: Text(
-                                      formatDuration(service.durationInMinutes),
+                                      formatDuration(consult.durationInMinutes),
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -91,11 +93,11 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
                                       ),
                                     ),
                                     trailing: Text(
-                                      'R\$${formatCurrency(service.value)}',
+                                      'R\$${formatCurrency(consult.value)}',
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                     onTap: () => showDateSelectionPopup(
-                                        context, service),
+                                        context, consult),
                                   ),
                                 );
                               }).toList(),
@@ -108,7 +110,7 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
                     ),
                   );
                 },
-                childCount: barberShop?.categories.length ?? 0,
+                childCount: clinic?.categories.length ?? 0,
               ),
             ),
           ],
@@ -119,51 +121,49 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
 
   void showDateSelectionPopup(
       BuildContext context, ConsultEntity selectedConsult) async {
-    // final ThemeData themeData = Theme.of(context);
-    // final DateTime? picked = await showDatePicker(
-    //   locale: const Locale("pt", "BR"),
-    //   context: context,
-    //   initialDate: DateTime.now(),
-    //   firstDate: DateTime.now(),
-    //   lastDate: DateTime(2100),
-    //   helpText: 'Selecione uma data',
-    //   builder: (BuildContext context, Widget? child) {
-    //     return Theme(
-    //       data: ThemeData.light().copyWith(
-    //         colorScheme: themeData.colorScheme.copyWith(
-    //           primary: AppColors.main,
-    //         ),
-    //         dialogTheme: const DialogTheme(
-    //           titleTextStyle: TextStyle(
-    //             fontSize: 24,
-    //             color: AppColors.main,
-    //           ),
-    //         ),
-    //       ),
-    //       child: child!,
-    //     );
-    //   },
-    // );
+    final ThemeData themeData = Theme.of(context);
+    final DateTime? picked = await showDatePicker(
+      locale: const Locale("pt", "BR"),
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+      helpText: 'Selecione uma data',
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: themeData.colorScheme.copyWith(
+              primary: AppColors.main,
+            ),
+            dialogTheme: const DialogTheme(
+              titleTextStyle: TextStyle(
+                fontSize: 24,
+                color: AppColors.main,
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
 
-    // if (picked != null) {
-    //   final dateTZ = tz.TZDateTime.from(picked, tz.local);
-    //   String formattedDate = dateTZ.toIso8601String();
+    if (picked != null) {
+      String formattedDate = DateFormat('yyyy-MM-dd').format(picked);
 
-    //   String route = Routes.CONSULT_DETAILS
-    //       .replaceAll(':companyId', controller.organizationId.value)
-    //       .replaceAll(':serviceId', selectedConsult.id);
+      String route = Routes.CONSULT_DETAILS
+          .replaceAll(':clinicId', controller.organizationId.value)
+          .replaceAll(':consultId', selectedConsult.id);
 
-    //   Get.toNamed(
-    //     route,
-    //     parameters: {'selectedDate': formattedDate},
-    //   );
+      Get.toNamed(
+        route,
+        parameters: {'selectedDate': formattedDate},
+      );
 
-    //   if (!controller.availableDates
-    //       .contains(DateFormat('yyyy-MM-dd').format(picked))) {
-    //     controller.availableDates.add(DateFormat('yyyy-MM-dd').format(picked));
-    //   }
+      if (!controller.availableDates.contains(formattedDate)) {
+        controller.availableDates.add(formattedDate);
+      }
 
-    //   controller.selectedDate.value = formattedDate;
-    // }
+      controller.selectedDate.value = formattedDate;
+    }
   }
 }

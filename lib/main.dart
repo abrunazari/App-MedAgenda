@@ -1,6 +1,7 @@
 import 'package:app_medagenda/core/bindings/initial.dart';
 import 'package:app_medagenda/core/constants/color.dart';
-import 'package:app_medagenda/pages.dart';
+import 'package:app_medagenda/core/routes/app-pages.dart';
+import 'package:app_medagenda/core/routes/app-routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';

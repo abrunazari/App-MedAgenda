@@ -1,18 +1,18 @@
 import 'package:app_medagenda/features/appointments/domain/entities/professional-availability.entity.dart';
 
 class ConsultAvailability {
-  final ConsultEntity services;
+  final ConsultEntity consults;
   final List<ProfessionalAvailability> availableProfessionals;
   final List<DateTime> availableDates;
 
   ConsultAvailability({
-    required this.services,
+    required this.consults,
     required this.availableProfessionals,
     required this.availableDates,
   });
 
   factory ConsultAvailability.fromJson(Map<String, dynamic> json) {
-    ConsultEntity services = ConsultEntity.fromJson(json['service']);
+    ConsultEntity consults = ConsultEntity.fromJson(json['consult']);
 
     List<ProfessionalAvailability> availableProfessionals = [];
     if (json.containsKey('availableProfessionals')) {
@@ -29,7 +29,7 @@ class ConsultAvailability {
     }
 
     return ConsultAvailability(
-      services: services,
+      consults: consults,
       availableProfessionals: availableProfessionals,
       availableDates: availableDates,
     );
@@ -37,7 +37,7 @@ class ConsultAvailability {
 
   Map<String, dynamic> toJson() {
     return {
-      'services': services.toJson(),
+      'consults': consults.toJson(),
       'availableProfessionals': availableProfessionals,
       'availableDates':
           availableDates.map((date) => date.toIso8601String()).toList(),
@@ -68,7 +68,7 @@ class ConsultEntity {
 
   @override
   String toString() {
-    return 'ServiceEntity(id: $id, name: $name, duration: $durationInMinutes, value: $value)';
+    return 'ConsultEntity(id: $id, name: $name, duration: $durationInMinutes, value: $value)';
   }
 
   factory ConsultEntity.fromJson(Map<String, dynamic> json) {

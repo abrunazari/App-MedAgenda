@@ -25,11 +25,11 @@ class ClinicEntity {
 
   @override
   String toString() {
-    return 'BarberShopEntity(id: $id, name: $name, imageUrl: $imageUrl, createdAt: $createdAt, updatedAt: $updatedAt, categories: ${categories.length})';
+    return 'ClinicEntity(id: $id, name: $name, imageUrl: $imageUrl, createdAt: $createdAt, updatedAt: $updatedAt, categories: ${categories.length})';
   }
 
   factory ClinicEntity.fromJson(Map<String, dynamic> fullJson) {
-    var barberShopJson = fullJson['barberShop'];
+    var clinicJson = fullJson['clinic'];
 
     var categoriesJson = fullJson['categories'] as List<dynamic>? ?? [];
 
@@ -38,20 +38,20 @@ class ClinicEntity {
     }).toList();
 
     return ClinicEntity(
-        id: barberShopJson['id'] ?? 'default_id',
-        name: barberShopJson['name'] ?? 'No name provided',
-        imageUrl: barberShopJson['imageUrl'],
+        id: clinicJson['id'] ?? 'default_id',
+        name: clinicJson['name'] ?? 'No name provided',
+        imageUrl: clinicJson['imageUrl'],
         organizationId:
-            barberShopJson['organizationId'] ?? 'default_organization_id',
-        createdAt: barberShopJson['createdAt'] != null
-            ? DateTime.parse(barberShopJson['createdAt'])
+            clinicJson['organizationId'] ?? 'default_organization_id',
+        createdAt: clinicJson['createdAt'] != null
+            ? DateTime.parse(clinicJson['createdAt'])
             : DateTime.now(),
-        updatedAt: DateTime.parse(barberShopJson['updatedAt']),
-        deletedAt: barberShopJson['deletedAt'] != null
-            ? DateTime.parse(barberShopJson['deletedAt'])
+        updatedAt: DateTime.parse(clinicJson['updatedAt']),
+        deletedAt: clinicJson['deletedAt'] != null
+            ? DateTime.parse(clinicJson['deletedAt'])
             : null,
-        deactivatedAt: barberShopJson['deactivatedAt'] != null
-            ? DateTime.parse(barberShopJson['deactivatedAt'])
+        deactivatedAt: clinicJson['deactivatedAt'] != null
+            ? DateTime.parse(clinicJson['deactivatedAt'])
             : null,
         categories: categories);
   }
