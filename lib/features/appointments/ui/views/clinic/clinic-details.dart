@@ -1,7 +1,7 @@
 import 'package:app_medagenda/core/constants/color.dart';
 import 'package:app_medagenda/core/routes/app-routes.dart';
-import 'package:app_medagenda/core/utils/format-currency.dart';
 import 'package:app_medagenda/core/utils/format-duration.dart';
+import 'package:app_medagenda/core/utils/format-price.dart';
 import 'package:app_medagenda/core/widgets/layout.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/consult.entity.dart';
 import 'package:app_medagenda/features/appointments/ui/controllers/clinic-details-controller.dart';
@@ -85,7 +85,7 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
                                       style: const TextStyle(fontSize: 20),
                                     ),
                                     subtitle: Text(
-                                      formatDuration(consult.durationInMinutes),
+                                      formatDuration(consult.duration),
                                       style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -93,7 +93,7 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
                                       ),
                                     ),
                                     trailing: Text(
-                                      'R\$${formatCurrency(consult.value)}',
+                                      formatPrice(consult.price),
                                       style: const TextStyle(fontSize: 18),
                                     ),
                                     onTap: () => showDateSelectionPopup(
@@ -153,11 +153,11 @@ class ClinicDetailsContainer extends GetView<ClinicDetailsController> {
       String route = Routes.CONSULT_DETAILS
           .replaceAll(':clinicId', controller.organizationId.value)
           .replaceAll(':consultId', selectedConsult.id);
-
-      Get.toNamed(
-        route,
-        parameters: {'selectedDate': formattedDate},
-      );
+      Get.toNamed(route, parameters: {
+        'selectedDate': formattedDate,
+        'clinicId': controller.organizationId.value,
+        'consultId': selectedConsult.id,
+      });
 
       if (!controller.availableDates.contains(formattedDate)) {
         controller.availableDates.add(formattedDate);

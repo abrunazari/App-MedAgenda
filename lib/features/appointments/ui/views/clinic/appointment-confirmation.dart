@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class AppointmentConfirmationContainer
     extends GetView<AppointmentConfirmationController> {
@@ -16,7 +15,7 @@ class AppointmentConfirmationContainer
 
   late final String consultName;
   late final int consultDuration;
-  late final int consultPrice;
+  late final double consultPrice;
   late final String professionalName;
   late final String selectedTime;
   late final String selectedDate;
@@ -27,34 +26,15 @@ class AppointmentConfirmationContainer
   AppointmentConfirmationContainer({Key? key}) : super(key: key) {
     final Map<String, dynamic>? args = Get.arguments;
 
-    consultName = box.read('consultName') ??
-        args?['consultName'] ??
-        'Nome de Serviço Padrão';
-    consultDuration =
-        box.read('consultDuration') ?? args?['consultDuration'] ?? 0;
-    consultPrice = box.read('consultPrice') ?? args?['consultPrice'] ?? 0;
-    professionalName = box.read('professionalName') ??
-        args?['professionalName'] ??
-        'Profissional Desconhecido';
-    selectedTime = box.read('selectedTime') ?? args?['selectedTime'] ?? '00:00';
-    selectedDate = box.read('selectedDate') ??
-        args?['selectedDate'] ??
-        DateTime.now().toIso8601String();
-    organizationId =
-        box.read('organizationId') ?? args?['organizationId'] ?? '';
-    consultId = box.read('consultId') ?? args?['consultId'] ?? '';
-    professionalId =
-        box.read('professionalId') ?? args?['professionalId'] ?? '';
-
-    box.write('consultName', consultName);
-    box.write('consultDuration', consultDuration);
-    box.write('consultPrice', consultPrice);
-    box.write('professionalName', professionalName);
-    box.write('selectedTime', selectedTime);
-    box.write('selectedDate', selectedDate);
-    box.write('organizationId', organizationId);
-    box.write('consultId', consultId);
-    box.write('professionalId', professionalId);
+    consultName = args?['consultName'] ?? 'Nome de Serviço Padrão';
+    consultDuration = args?['consultDuration'] ?? 0;
+    consultPrice = (args?['consultPrice'] ?? 0).toDouble();
+    professionalName = args?['professionalName'] ?? 'Profissional Desconhecido';
+    selectedTime = args?['selectedTime'] ?? '00:00';
+    selectedDate = args?['selectedDate'] ?? DateTime.now().toIso8601String();
+    organizationId = args?['organizationId'] ?? '';
+    consultId = args?['consultId'] ?? '';
+    professionalId = args?['professionalId'] ?? '';
   }
 
   @override
@@ -236,24 +216,13 @@ class AppointmentConfirmationContainer
                 String datePart = selectedDate.split('T')[0];
                 String dateTimeString = '$datePart $selectedTime:00';
                 DateTime dateTime;
-                try {
-                  dateTime = DateTime.parse(dateTimeString);
-                } catch (e) {
-                  print('Erro ao analisar data e hora: $dateTimeString');
-                  return;
-                }
-                tz.TZDateTime tzDateTime = tz.TZDateTime(
-                    tz.local,
-                    dateTime.year,
-                    dateTime.month,
-                    dateTime.day,
-                    dateTime.hour,
-                    dateTime.minute);
+
+                dateTime = DateTime.parse(dateTimeString);
 
                 controller.scheduleAppointment(
                   consultId: consultId,
                   professionalId: professionalId,
-                  dateTime: tzDateTime,
+                  dateTime: dateTime,
                   organizationId: organizationId,
                   clientName: nameController.text,
                 );

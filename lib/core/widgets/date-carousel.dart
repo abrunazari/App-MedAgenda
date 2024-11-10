@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class DateCarousel extends GetView<DateCarouselController> {
   final List<DateTime> dates;
@@ -69,11 +68,9 @@ class DateCarouselController extends GetxController {
   }
 
   void handleDateTap(DateTime date) {
-    final dateTZ = tz.TZDateTime.from(date, tz.local);
-    String formattedDate = dateTZ.toIso8601String();
+    String formattedDate = date.toIso8601String();
 
     final consultDetailsController = Get.find<ConsultDetailsController>();
-
     consultDetailsController.handleDateSelection(formattedDate);
     update();
   }

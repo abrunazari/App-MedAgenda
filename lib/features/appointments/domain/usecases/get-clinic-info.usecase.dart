@@ -12,6 +12,7 @@ class GetClinicInfoUsecase
 
   GetClinicInfoUsecase({required this.appointmentRepository});
 
+  @override
   Future<Either<Failure, ClinicEntity>> call(GetClinicInfoParams params) async {
     return await appointmentRepository
         .getClinicInfo(GetClinicInfoCmsParams(clinicId: params.clinicId));
@@ -25,14 +26,4 @@ class GetClinicInfoParams extends Equatable {
 
   @override
   List<Object> get props => [id];
-}
-
-class InvalidInputFailure extends Failure {
-  @override
-  final String message;
-
-  InvalidInputFailure({this.message = "Invalid input."});
-
-  @override
-  List<Object> get props => [message];
 }

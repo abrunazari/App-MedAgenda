@@ -11,15 +11,10 @@ import 'package:get/get.dart';
 class InitialBinding implements Bindings {
   @override
   void dependencies() {
-    const String baseUrl =
-        'https://api_base_url'; // Defina a URL base da API aqui.
+    Get.lazyPut(() => GetClinicInfoCmsLogic(), fenix: true);
+    Get.lazyPut(() => GetConsultInfoCmsLogic(), fenix: true);
+    Get.lazyPut(() => ScheduleAppointmentCmsLogic(), fenix: true);
 
-    //! CMS LOGIC
-    Get.lazyPut(() => GetClinicInfoCmsLogic(baseUrl), fenix: true);
-    Get.lazyPut(() => GetConsultInfoCmsLogic(baseUrl), fenix: true);
-    Get.lazyPut(() => ScheduleAppointmentCmsLogic(baseUrl), fenix: true);
-
-    //! REPOSITORIES
     Get.lazyPut(
         () => AppointmentRepositoryImpl(
             getClinicInfoCmsLogic: Get.find<GetClinicInfoCmsLogic>(),
@@ -28,7 +23,6 @@ class InitialBinding implements Bindings {
                 Get.find<ScheduleAppointmentCmsLogic>()),
         fenix: true);
 
-    //! USECASES
     Get.lazyPut(
         () => GetClinicInfoUsecase(
             appointmentRepository: Get.find<AppointmentRepositoryImpl>()),

@@ -80,14 +80,7 @@ class AppointmentConfirmationController extends GetxController {
     ));
 
     result.fold(
-      (failure) {
-        errorMessage(failure.message);
-        Get.toNamed(Routes.RESULT, parameters: {
-          'clinicId': organizationId,
-          'consultId': consultId,
-          'isSuccess': 'false',
-        });
-      },
+      (_) => {},
       (appointmentData) {
         appointment(appointmentData);
         Get.toNamed(Routes.RESULT, parameters: {

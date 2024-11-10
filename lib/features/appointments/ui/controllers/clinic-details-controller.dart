@@ -2,6 +2,7 @@ import 'package:app_medagenda/features/appointments/domain/entities/clinic.entit
 import 'package:app_medagenda/features/appointments/domain/usecases/get-clinic-info.usecase.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 
 class ClinicDetailsController extends GetxController {
   final GetClinicInfoUsecase getClinicInfoUsecase;
@@ -28,8 +29,19 @@ class ClinicDetailsController extends GetxController {
       errorMessage.value = 'Nenhum clinicId fornecido';
       return;
     }
+    initializeAvailableDates();
+
     clearStoredData();
     getClinicInfo(organizationId.value);
+  }
+
+  void initializeAvailableDates() {
+    final now = DateTime.now();
+    availableDates.value = List.generate(
+      30,
+      (index) =>
+          DateFormat('yyyy-MM-dd').format(now.add(Duration(days: index))),
+    );
   }
 
   void clearStoredData() {

@@ -15,6 +15,7 @@ class ConsultDetailsContainer extends GetView<ConsultDetailsController> {
   @override
   Widget build(BuildContext context) {
     return MainLayout(
+      title: "Detalhes da Consulta",
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -40,7 +41,6 @@ class ConsultDetailsContainer extends GetView<ConsultDetailsController> {
                   dates: controller.availableDates
                       .map((dateString) =>
                           DateFormat('yyyy-MM-dd').parse(dateString))
-                      .toSet()
                       .toList()
                     ..sort((a, b) => a.compareTo(b)),
                 ),

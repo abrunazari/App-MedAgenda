@@ -51,8 +51,8 @@ class ConsultEntity {
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
-  final int durationInMinutes;
-  final double value;
+  final int duration;
+  final double price;
   final String categoryId;
 
   ConsultEntity({
@@ -61,27 +61,46 @@ class ConsultEntity {
     required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
-    required this.durationInMinutes,
-    required this.value,
+    required this.duration,
+    required this.price,
     required this.categoryId,
   });
 
   @override
   String toString() {
-    return 'ConsultEntity(id: $id, name: $name, duration: $durationInMinutes, value: $value)';
+    return 'ConsultEntity(id: $id, name: $name, duration: $duration, value: $price)';
   }
+
+  // factory ConsultEntity.fromJson(Map<String, dynamic> json) {
+  //   return ConsultEntity(
+  //     id: json['id'],
+  //     name: json['name'],
+  //     createdAt: DateTime.parse(json[
+  //         'createdAt']), //_TypeError (type 'Null' is not a subtype of type 'String')
+  //     updatedAt: DateTime.parse(json['updatedAt']),
+  //     deletedAt:
+  //         json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
+  //     durationInMinutes: json['durationInMinutes'],
+  //     value: json['value'],
+  //     categoryId: json['categoryId'],
+  //   );
+  // }
 
   factory ConsultEntity.fromJson(Map<String, dynamic> json) {
     return ConsultEntity(
-      id: json['id'],
-      name: json['name'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
+      id: json['id'] ?? 'default-id',
+      name: json['name'] ?? 'Unnamed Consult',
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : DateTime.now(),
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : DateTime.now(),
       deletedAt:
           json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
-      durationInMinutes: json['durationInMinutes'],
-      value: json['value'],
-      categoryId: json['categoryId'],
+      duration: json['duration'] ?? 0,
+      price: (json['price'] as num?)?.toDouble() ?? 0.0,
+      categoryId: json['categoryId'] ?? 'default-category-id',
     );
   }
 
@@ -92,8 +111,8 @@ class ConsultEntity {
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt.toIso8601String(),
       'deletedAt': deletedAt?.toIso8601String(),
-      'durationInMinutes': durationInMinutes,
-      'value': value,
+      'duration': duration,
+      'price': price,
       'categoryId': categoryId,
     };
   }

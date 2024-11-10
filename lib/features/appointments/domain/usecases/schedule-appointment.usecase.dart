@@ -12,6 +12,7 @@ class ScheduleAppointmentUsecase
 
   ScheduleAppointmentUsecase({required this.appointmentRepository});
 
+  @override
   Future<Either<Failure, AppointmentEntity>> call(
       ScheduleAppointmentParams params) async {
     return await appointmentRepository.scheduleAppointment(
@@ -40,14 +41,4 @@ class ScheduleAppointmentParams extends Equatable {
 
   @override
   List<Object> get props => [id];
-}
-
-class InvalidInputFailure extends Failure {
-  @override
-  final String message;
-
-  InvalidInputFailure({this.message = "Invalid input."});
-
-  @override
-  List<Object> get props => [message];
 }

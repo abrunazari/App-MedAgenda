@@ -66,9 +66,8 @@ class ConsultDetailsController extends GetxController {
           .map((date) => DateFormat('yyyy-MM-dd').format(date))
           .toList();
       consultName.value = consultAvailabilityData.consults.name;
-      consultDuration.value =
-          consultAvailabilityData.consults.durationInMinutes;
-      consultPrice.value = consultAvailabilityData.consults.value.toInt();
+      consultDuration.value = consultAvailabilityData.consults.duration;
+      consultPrice.value = consultAvailabilityData.consults.price.toInt();
       professionals.value = consultAvailabilityData.availableProfessionals;
 
       if (!availableDates.contains(DateFormat('yyyy-MM-dd')
