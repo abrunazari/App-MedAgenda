@@ -10,6 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.2
   get: ^4.6.6
   get_storage: ^2.1.1
@@ -19,11 +21,7 @@ dependencies:
   carousel_slider:
   flutter_dotenv:
   confetti:
-  timezone: 
-  flutter_localizations:
-    sdk: flutter
   firebase_core: ^2.27.0
-
 
 
 dev_dependencies:
@@ -33,10 +31,8 @@ dev_dependencies:
 
 
 assets:
-  - .env
-  # - fonts/
   - images
 
 flutter:
   uses-material-design: true
-  # fonts:
+ 

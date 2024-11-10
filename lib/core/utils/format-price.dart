@@ -1,3 +1,3 @@
-String formatPrice(int price) {
-  return 'R\$ ${(price / 100).toStringAsFixed(2).replaceAll('.', ',')}';
+String formatPrice(double price) {
+  return 'R\$ ${price.toStringAsFixed(2).replaceAll('.', ',')}';
 }

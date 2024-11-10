@@ -6,7 +6,7 @@ class ProfessionalEntity {
   final String? email;
   final String? imageUrl;
   final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? updatedAt;
   final DateTime? deletedAt;
   final DateTime? deactivatedAt;
   final String? organizationId;
@@ -21,7 +21,7 @@ class ProfessionalEntity {
     this.email,
     this.imageUrl,
     required this.createdAt,
-    required this.updatedAt,
+    this.updatedAt,
     this.deletedAt,
     required this.isActive,
     this.deactivatedAt,
@@ -59,7 +59,7 @@ class ProfessionalEntity {
       'email': email,
       'imageUrl': imageUrl,
       'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
+      'updatedAt': updatedAt?.toIso8601String(),
       'deletedAt': deletedAt?.toIso8601String(),
       'deactivatedAt': deactivatedAt?.toIso8601String(),
       'organizationId': organizationId,

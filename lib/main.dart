@@ -3,6 +3,7 @@ import 'package:app_medagenda/core/constants/color.dart';
 import 'package:app_medagenda/core/routes/app-pages.dart';
 import 'package:app_medagenda/core/routes/app-routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -27,8 +28,13 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
+      initialRoute: Routes.CLINIC.replaceFirst(':clinicId', '1'),
       getPages: Pages.pages,
-      initialRoute: Routes.CLINIC,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       supportedLocales: const [
         Locale('pt', 'BR'),
       ],

@@ -24,7 +24,6 @@ class _AppointmentResultContainerState extends State<AppointmentResultContainer>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
-  late Animation<double> _shakeAnimation;
   late ConfettiController _confettiController;
 
   String clinicId = '';
@@ -40,30 +39,16 @@ class _AppointmentResultContainerState extends State<AppointmentResultContainer>
       vsync: this,
     );
 
-    _scaleAnimation =
-        Tween<double>(begin: widget.isSuccess ? 0.5 : 0.8, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(
       CurvedAnimation(
         parent: _animationController,
-        curve: widget.isSuccess ? Curves.elasticOut : Curves.easeOut,
+        curve: Curves.elasticOut,
       ),
     );
 
-    _shakeAnimation = Tween<double>(begin: -10.0, end: 10.0)
-        .chain(CurveTween(curve: Curves.decelerate))
-        .animate(_animationController)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _animationController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          _animationController.forward();
-        }
-      });
-
     _confettiController =
         ConfettiController(duration: const Duration(seconds: 3));
-    if (widget.isSuccess) {
-      _confettiController.play();
-    }
+    _confettiController.play();
 
     _animationController.forward();
   }
@@ -93,27 +78,18 @@ class _AppointmentResultContainerState extends State<AppointmentResultContainer>
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Transform.translate(
-                          offset: Offset(
-                              widget.isSuccess ? 0 : _shakeAnimation.value, 0),
-                          child: ScaleTransition(
-                            scale: _scaleAnimation,
-                            child: Icon(
-                              widget.isSuccess
-                                  ? Icons.check_circle
-                                  : Icons.error,
-                              color:
-                                  widget.isSuccess ? Colors.green : Colors.red,
-                              size: 100,
-                            ),
+                        ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: const Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                            size: 100,
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Text(
-                          widget.isSuccess
-                              ? 'Agendamento Confirmado'
-                              : 'Falha ao Agendar',
-                          style: const TextStyle(
+                        const Text(
+                          'Agendamento Confirmado',
+                          style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: AppColors.main),
@@ -149,7 +125,7 @@ class _AppointmentResultContainerState extends State<AppointmentResultContainer>
             onPressed: () {
               clearStoredData();
               Get.offAllNamed(
-                Routes.CLINIC.replaceFirst(':clinicId', clinicId),
+                Routes.CLINIC.replaceFirst(':clinicId', '1'),
               );
             },
             text: 'Fazer Novo Agendamento',

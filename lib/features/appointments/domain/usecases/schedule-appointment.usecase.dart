@@ -12,15 +12,17 @@ class ScheduleAppointmentUsecase
 
   ScheduleAppointmentUsecase({required this.appointmentRepository});
 
+  @override
   Future<Either<Failure, AppointmentEntity>> call(
-      ScheduleAppointmentParams params) async {
-    return await appointmentRepository.scheduleAppointment(
-        ScheduleAppointmentCmsParams(
-            consultId: params.consultId,
-            professionalId: params.professionalId,
-            dateTime: params.dateTime,
-            clientName: params.clientName,
-            organizationId: params.organizationId));
+      ScheduleAppointmentParams params) {
+    return appointmentRepository
+        .scheduleAppointment(ScheduleAppointmentCmsParams(
+      consultId: params.consultId,
+      professionalId: params.professionalId,
+      dateTime: params.dateTime,
+      clientName: params.clientName,
+      organizationId: params.organizationId,
+    ));
   }
 }
 
@@ -31,23 +33,15 @@ class ScheduleAppointmentParams extends Equatable {
   final String clientName;
   final String organizationId;
 
-  const ScheduleAppointmentParams(
-      {required this.consultId,
-      required this.professionalId,
-      required this.dateTime,
-      required this.clientName,
-      required this.organizationId});
+  const ScheduleAppointmentParams({
+    required this.consultId,
+    required this.professionalId,
+    required this.dateTime,
+    required this.clientName,
+    required this.organizationId,
+  });
 
   @override
-  List<Object> get props => [id];
-}
-
-class InvalidInputFailure extends Failure {
-  @override
-  final String message;
-
-  InvalidInputFailure({this.message = "Invalid input."});
-
-  @override
-  List<Object> get props => [message];
+  List<Object> get props =>
+      [consultId, professionalId, dateTime, clientName, organizationId];
 }
