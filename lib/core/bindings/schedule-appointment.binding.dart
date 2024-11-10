@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 class ScheduleAppointmentBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => AppointmentConfirmationController(
-        scheduleAppointmentUsecase: Get.find<ScheduleAppointmentUsecase>()));
+    Get.put(AppointmentConfirmationController(
+      scheduleAppointmentUsecase: Get.find<ScheduleAppointmentUsecase>(),
+    ));
   }
 }

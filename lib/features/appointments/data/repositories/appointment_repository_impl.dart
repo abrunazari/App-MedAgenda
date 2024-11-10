@@ -1,7 +1,8 @@
 import 'package:app_medagenda/core/errors/failure.dart';
-import 'package:app_medagenda/features/appointments/data/cms_logic/get-clinic-info.cms_logic.dart';
-import 'package:app_medagenda/features/appointments/data/cms_logic/get-consult-info.cms_logic.dart';
-import 'package:app_medagenda/features/appointments/data/cms_logic/schedule-appointment.cms_logic.dart';
+import 'package:app_medagenda/features/appointments/data/datasource/get-clinic-info.datasource.dart';
+import 'package:app_medagenda/features/appointments/data/datasource/get-consult-info.datasource.dart';
+import 'package:app_medagenda/features/appointments/data/datasource/schedule-appointment.datasource.dart';
+
 import 'package:app_medagenda/features/appointments/domain/entities/appointment.entity.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/clinic.entity.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/consult.entity.dart';
@@ -10,31 +11,31 @@ import 'package:app_medagenda/features/appointments/domain/repositories/appointm
 import 'package:dartz/dartz.dart';
 
 class AppointmentRepositoryImpl implements AppointmentRepository {
-  final GetClinicInfoCmsLogic getClinicInfoCmsLogic;
-  final GetConsultInfoCmsLogic getConsultInfoCmsLogic;
-  final ScheduleAppointmentCmsLogic scheduleAppointmentCmsLogic;
+  final GetClinicInfoDataSource getClinicInfoDataSource;
+  final GetConsultInfoDataSource getConsultInfoDataSource;
+  final ScheduleAppointmentDataSource scheduleAppointmentDataSource;
 
   AppointmentRepositoryImpl({
-    required this.getClinicInfoCmsLogic,
-    required this.getConsultInfoCmsLogic,
-    required this.scheduleAppointmentCmsLogic,
+    required this.getClinicInfoDataSource,
+    required this.getConsultInfoDataSource,
+    required this.scheduleAppointmentDataSource,
   });
 
   @override
   Future<Either<Failure, ClinicEntity>> getClinicInfo(
-      GetClinicInfoCmsParams params) async {
-    return await getClinicInfoCmsLogic.call(params);
+      GetClinicInfoDataSourceParams params) async {
+    return await getClinicInfoDataSource.call(params);
   }
 
   @override
   Future<Either<Failure, ConsultAvailability>> getConsultInfo(
-      GetConsultInfoCmsParams params) async {
-    return await getConsultInfoCmsLogic.call(params);
+      GetConsultInfoDataSourceParams params) async {
+    return await getConsultInfoDataSource.call(params);
   }
 
   @override
   Future<Either<Failure, AppointmentEntity>> scheduleAppointment(
-      ScheduleAppointmentCmsParams params) async {
-    return await scheduleAppointmentCmsLogic.call(params);
+      ScheduleAppointmentDataSourceParams params) async {
+    return await scheduleAppointmentDataSource.call(params);
   }
 }

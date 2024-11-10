@@ -8,28 +8,26 @@ import 'package:app_medagenda/features/appointments/ui/views/clinic/clinic-detai
 import 'package:app_medagenda/features/appointments/ui/views/clinic/consult-details.dart';
 import 'package:get/get.dart';
 
-class Pages {
-  static final pages = [
-    GetPage(
-      name: Routes.CLINIC,
-      page: () => const ClinicDetailsContainer(),
-      binding: ClinicDetailsBinding(),
+final pages = [
+  GetPage(
+    name: Routes.CLINIC,
+    page: () => const ClinicDetailsContainer(),
+    binding: ClinicDetailsBinding(),
+  ),
+  GetPage(
+    name: Routes.CONSULT_DETAILS,
+    page: () => const ConsultDetailsContainer(),
+    binding: ConsultDetailsBinding(),
+  ),
+  GetPage(
+    name: Routes.CONFIRMATION,
+    page: () => AppointmentConfirmationContainer(),
+    binding: ScheduleAppointmentBinding(),
+  ),
+  GetPage(
+    name: Routes.RESULT,
+    page: () => AppointmentResultContainer(
+      isSuccess: Get.parameters['isSuccess'] == 'true',
     ),
-    GetPage(
-      name: Routes.CONSULT_DETAILS,
-      page: () => const ConsultDetailsContainer(),
-      binding: ConsultDetailsBinding(),
-    ),
-    GetPage(
-      name: Routes.CONFIRMATION,
-      page: () => AppointmentConfirmationContainer(),
-      binding: ScheduleAppointmentBinding(),
-    ),
-    GetPage(
-      name: Routes.RESULT,
-      page: () => AppointmentResultContainer(
-        isSuccess: Get.parameters['isSuccess'] == 'true',
-      ),
-    ),
-  ];
-}
+  ),
+];

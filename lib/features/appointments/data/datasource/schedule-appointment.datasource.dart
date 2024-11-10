@@ -1,16 +1,16 @@
-import 'package:app_medagenda/core/architecture/cms_logic/cms_logic.dart';
+import 'package:app_medagenda/core/architecture/datasource/datasource.dart';
 import 'package:app_medagenda/core/errors/failure.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/appointment.entity.dart';
 import 'package:app_medagenda/features/appointments/domain/repositories/appointment.params.dart';
 import 'package:dartz/dartz.dart';
 
-class ScheduleAppointmentCmsLogic
-    extends CmsLogic<AppointmentEntity, ScheduleAppointmentCmsParams> {
-  ScheduleAppointmentCmsLogic();
+class ScheduleAppointmentDataSource
+    extends DataSource<AppointmentEntity, ScheduleAppointmentDataSourceParams> {
+  ScheduleAppointmentDataSource();
 
   @override
   Future<Either<Failure, AppointmentEntity>> call(
-      ScheduleAppointmentCmsParams params) async {
+      ScheduleAppointmentDataSourceParams params) async {
     final mockResponse = {
       'consultId': params.consultId,
       'professionalId': params.professionalId,

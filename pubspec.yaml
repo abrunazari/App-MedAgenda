@@ -19,9 +19,7 @@ dependencies:
   equatable: ^2.0.5
   intl:
   carousel_slider:
-  flutter_dotenv:
   confetti:
-  firebase_core: ^2.27.0
 
 
 dev_dependencies:
@@ -30,9 +28,9 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 
-assets:
-  - images
 
 flutter:
   uses-material-design: true
- 
+  assets:
+    - assets/images/
+

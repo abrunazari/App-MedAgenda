@@ -2,7 +2,7 @@ import 'package:app_medagenda/core/errors/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class CmsLogic<Type, Params> {
+abstract class DataSource<Type, Params> {
   Future<Either<Failure, Type>> call(Params params);
 }
 

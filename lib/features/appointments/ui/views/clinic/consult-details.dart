@@ -94,14 +94,14 @@ class ConsultDetailsContainer extends GetView<ConsultDetailsController> {
     });
   }
 
-  Widget buildProfessionalTile(
-      BuildContext context, ProfessionalAvailability professionalAvailability) {
+  Widget buildProfessionalTile(BuildContext context,
+      ProfessionalAvailabilities professionalAvailability) {
     ProfessionalEntity professional = professionalAvailability.professional;
     ImageProvider backgroundImage;
     if (professional.imageUrl != null && professional.imageUrl!.isNotEmpty) {
       backgroundImage = NetworkImage(professional.imageUrl!);
     } else {
-      backgroundImage = const AssetImage("images/avatar.png");
+      backgroundImage = const AssetImage("assets/images/avatar.jpeg");
     }
 
     return ExpansionTile(
@@ -140,8 +140,8 @@ class ConsultDetailsContainer extends GetView<ConsultDetailsController> {
     );
   }
 
-  Widget buildAvailableTimesGrid(
-      BuildContext context, ProfessionalAvailability professionalAvailability) {
+  Widget buildAvailableTimesGrid(BuildContext context,
+      ProfessionalAvailabilities professionalAvailability) {
     double screenWidth = MediaQuery.of(context).size.width;
     int crossAxisCount = screenWidth > 600 ? 8 : 4;
 

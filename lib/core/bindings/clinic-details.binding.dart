@@ -5,7 +5,8 @@ import 'package:get/instance_manager.dart';
 class ClinicDetailsBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ClinicDetailsController(
-        getClinicInfoUsecase: Get.find<GetClinicInfoUsecase>()));
+    Get.put(ClinicDetailsController(
+      getClinicInfoUsecase: Get.find<GetClinicInfoUsecase>(),
+    ));
   }
 }

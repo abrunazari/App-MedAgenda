@@ -19,7 +19,7 @@ class ConsultDetailsController extends GetxController {
   final consultName = RxString('');
   final consultDuration = RxInt(0);
   final consultPrice = RxInt(0);
-  final professionals = RxList<ProfessionalAvailability>([]);
+  final professionals = RxList<ProfessionalAvailabilities>([]);
 
   final consultId = RxString('');
   final RxString organizationId = ''.obs;

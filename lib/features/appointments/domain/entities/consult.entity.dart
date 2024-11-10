@@ -2,7 +2,7 @@ import 'package:app_medagenda/features/appointments/domain/entities/professional
 
 class ConsultAvailability {
   final ConsultEntity consults;
-  final List<ProfessionalAvailability> availableProfessionals;
+  final List<ProfessionalAvailabilities> availableProfessionals;
   final List<DateTime> availableDates;
 
   ConsultAvailability({
@@ -14,10 +14,10 @@ class ConsultAvailability {
   factory ConsultAvailability.fromJson(Map<String, dynamic> json) {
     ConsultEntity consults = ConsultEntity.fromJson(json['consult']);
 
-    List<ProfessionalAvailability> availableProfessionals = [];
+    List<ProfessionalAvailabilities> availableProfessionals = [];
     if (json.containsKey('availableProfessionals')) {
       availableProfessionals = (json['availableProfessionals'] as List)
-          .map((prof) => ProfessionalAvailability.fromJson(prof))
+          .map((prof) => ProfessionalAvailabilities.fromJson(prof))
           .toList();
     }
 
@@ -70,21 +70,6 @@ class ConsultEntity {
   String toString() {
     return 'ConsultEntity(id: $id, name: $name, duration: $duration, value: $price)';
   }
-
-  // factory ConsultEntity.fromJson(Map<String, dynamic> json) {
-  //   return ConsultEntity(
-  //     id: json['id'],
-  //     name: json['name'],
-  //     createdAt: DateTime.parse(json[
-  //         'createdAt']), //_TypeError (type 'Null' is not a subtype of type 'String')
-  //     updatedAt: DateTime.parse(json['updatedAt']),
-  //     deletedAt:
-  //         json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
-  //     durationInMinutes: json['durationInMinutes'],
-  //     value: json['value'],
-  //     categoryId: json['categoryId'],
-  //   );
-  // }
 
   factory ConsultEntity.fromJson(Map<String, dynamic> json) {
     return ConsultEntity(

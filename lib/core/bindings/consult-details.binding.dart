@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 class ConsultDetailsBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ConsultDetailsController(
-        getConsultInfoUsecase: Get.find<GetConsultInfoUsecase>()));
+    Get.put(ConsultDetailsController(
+      getConsultInfoUsecase: Get.find<GetConsultInfoUsecase>(),
+    ));
   }
 }

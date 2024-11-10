@@ -1,4 +1,4 @@
-import 'package:app_medagenda/core/architecture/cms_logic/cms_logic.dart';
+import 'package:app_medagenda/core/architecture/datasource/datasource.dart';
 import 'package:app_medagenda/core/errors/failure.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/consult.entity.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/professional-availability.entity.dart';
@@ -6,15 +6,15 @@ import 'package:app_medagenda/features/appointments/domain/entities/professional
 import 'package:app_medagenda/features/appointments/domain/repositories/appointment.params.dart';
 import 'package:dartz/dartz.dart';
 
-class GetConsultInfoCmsLogic
-    extends CmsLogic<ConsultAvailability, GetConsultInfoCmsParams> {
-  GetConsultInfoCmsLogic();
+class GetConsultInfoDataSource
+    extends DataSource<ConsultAvailability, GetConsultInfoDataSourceParams> {
+  GetConsultInfoDataSource();
 
   final Map<String, dynamic> _mockConsultDataById = _buildMockConsultData();
 
   @override
   Future<Either<Failure, ConsultAvailability>> call(
-      GetConsultInfoCmsParams params) async {
+      GetConsultInfoDataSourceParams params) async {
     final mockConsultData = _mockConsultDataById[params.consultId];
     if (mockConsultData == null) {
       return Left(ServerFailure(
@@ -52,10 +52,10 @@ class GetConsultInfoCmsLogic
     );
   }
 
-  List<ProfessionalAvailability> _createProfessionalAvailabilities(
+  List<ProfessionalAvailabilities> _createProfessionalAvailabilities(
       Map<String, dynamic> mockData, String selectedDate) {
     return (mockData['availableProfessionals'] as List).map((prof) {
-      return ProfessionalAvailability(
+      return ProfessionalAvailabilities(
         professional: ProfessionalEntity(
           id: prof['id'],
           name: prof['name'],
@@ -170,11 +170,7 @@ class GetConsultInfoCmsLogic
         'availableProfessionals': [
           {
             'id': 'prof5',
-            'name': 'Dra. Carla Santos',
-          },
-          {
-            'id': 'prof6',
-            'name': 'Dr. João Silva',
+            'name': 'Dra. Katia Pires',
           },
         ],
         'availableDates': _generateAvailableDatesForMock(),

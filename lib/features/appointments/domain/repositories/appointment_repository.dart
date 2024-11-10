@@ -7,11 +7,11 @@ import 'package:dartz/dartz.dart';
 
 abstract class AppointmentRepository {
   Future<Either<Failure, ClinicEntity>> getClinicInfo(
-      GetClinicInfoCmsParams params);
+      GetClinicInfoDataSourceParams params);
 
   Future<Either<Failure, ConsultAvailability>> getConsultInfo(
-      GetConsultInfoCmsParams params);
+      GetConsultInfoDataSourceParams params);
 
   Future<Either<Failure, AppointmentEntity>> scheduleAppointment(
-      ScheduleAppointmentCmsParams params);
+      ScheduleAppointmentDataSourceParams params);
 }
