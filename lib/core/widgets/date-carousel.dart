@@ -9,6 +9,7 @@ class DateCarousel extends GetView<DateCarouselController> {
   final List<DateTime> dates;
 
   const DateCarousel({Key? key, required this.dates}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DateCarouselController>(
@@ -19,21 +20,89 @@ class DateCarousel extends GetView<DateCarouselController> {
             items: dates.map((date) {
               return Builder(
                 builder: (BuildContext context) {
-                  return controller.buildDateChip(date, context);
+                  return DateChip(
+                    date: date,
+                    isSelected: controller.isSelectedDate(date),
+                    onTap: () => controller.handleDateTap(date),
+                  );
                 },
               );
             }).toList(),
             options: CarouselOptions(
               initialPage: controller.current,
               enableInfiniteScroll: false,
-              viewportFraction: 0.2,
-              height: 80,
+              viewportFraction: 0.3,
+              height: 90,
               onPageChanged: (index, reason) {
                 controller.setCurrentIndex(index);
               },
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class DateChip extends StatelessWidget {
+  final DateTime date;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const DateChip({
+    Key? key,
+    required this.date,
+    required this.isSelected,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final dayOfWeek = DateFormat('EEE', 'pt_BR').format(date);
+    final dayOfMonth = DateFormat('d').format(date);
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              dayOfWeek,
+              style: TextStyle(
+                fontSize: 16,
+                color: isSelected ? AppColors.main : Colors.black54,
+              ),
+            ),
+            const SizedBox(height: 5),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isSelected
+                    ? AppColors.main.withOpacity(0.8)
+                    : AppColors.grey50.withOpacity(0.5),
+                boxShadow: isSelected
+                    ? [BoxShadow(color: Colors.grey.shade400, blurRadius: 5)]
+                    : [],
+              ),
+              child: CircleAvatar(
+                radius: 20,
+                backgroundColor: Colors.transparent,
+                child: Text(
+                  dayOfMonth,
+                  style: TextStyle(
+                    color: isSelected ? Colors.white : Colors.black,
+                    fontSize: 18,
+                    fontWeight:
+                        isSelected ? FontWeight.bold : FontWeight.normal,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -91,7 +160,7 @@ class DateCarouselController extends GetxController {
     final isSelected = isSelectedDate(date);
     final backgroundColor = isSelected
         ? AppColors.main.withOpacity(0.8)
-        : AppColors.aquaGreen.withOpacity(0.5);
+        : AppColors.grey50.withOpacity(0.5);
     final textColor = isSelected ? Colors.white : Colors.black;
 
     return GestureDetector(

@@ -25,7 +25,7 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.mainSoft,
+        backgroundColor: AppColors.main,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

@@ -7,8 +7,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-void main() {
-  GetStorage.init();
+void main() async {
+  await GetStorage.init();
   InitialBinding().dependencies();
   runApp(const MyApp());
 }
@@ -29,14 +29,11 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.CLINIC.replaceFirst(':clinicId', '1'),
-      getPages: Pages.pages,
+      getPages: pages,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('pt', 'BR'),
       ],
     );
   }

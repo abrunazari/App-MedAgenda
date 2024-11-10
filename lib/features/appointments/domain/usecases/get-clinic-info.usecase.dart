@@ -14,8 +14,8 @@ class GetClinicInfoUsecase
 
   @override
   Future<Either<Failure, ClinicEntity>> call(GetClinicInfoParams params) {
-    return appointmentRepository
-        .getClinicInfo(GetClinicInfoCmsParams(clinicId: params.clinicId));
+    return appointmentRepository.getClinicInfo(
+        GetClinicInfoDataSourceParams(clinicId: params.clinicId));
   }
 }
 

@@ -15,7 +15,7 @@ class GetConsultInfoUsecase
   @override
   Future<Either<Failure, ConsultAvailability>> call(
       GetConsultInfoParams params) {
-    return appointmentRepository.getConsultInfo(GetConsultInfoCmsParams(
+    return appointmentRepository.getConsultInfo(GetConsultInfoDataSourceParams(
       consultId: params.consultId,
       date: params.date,
     ));

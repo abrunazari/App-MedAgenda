@@ -7,29 +7,16 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ClinicDetailsController>();
+    final controller = Get.find<
+        ClinicDetailsController>(); //"ClinicDetailsController" not found. You need to call "Get.put(ClinicDetailsController())" or "Get.lazyPut(()=>ClinicDetailsController())"
     return Obx(() => SliverAppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('images/shape-colors.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              color: Colors.black.withOpacity(0.3),
-            ),
-          ),
-          backgroundColor: Colors.transparent,
+          backgroundColor: const Color(0xFF147190),
           title: Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 radius: 24,
                 backgroundColor: Colors.white,
-                backgroundImage: controller.clinicEntity.value?.imageUrl != null
-                    ? NetworkImage(controller.clinicEntity.value!.imageUrl!)
-                    : const AssetImage("images/standalone-logo.png")
-                        as ImageProvider,
+                backgroundImage: AssetImage("assets/images/logo.png"),
               ),
               const SizedBox(width: 10),
               Text(controller.clinicEntity.value?.name ?? '',

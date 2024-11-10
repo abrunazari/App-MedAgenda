@@ -1,29 +1,29 @@
-class GetClinicInfoCmsParams {
+class GetClinicInfoDataSourceParams {
   String clinicId;
 
-  GetClinicInfoCmsParams({
+  GetClinicInfoDataSourceParams({
     required this.clinicId,
   });
 }
 
-class GetConsultInfoCmsParams {
+class GetConsultInfoDataSourceParams {
   String consultId;
   String date;
 
-  GetConsultInfoCmsParams({
+  GetConsultInfoDataSourceParams({
     required this.consultId,
     required this.date,
   });
 }
 
-class ScheduleAppointmentCmsParams {
+class ScheduleAppointmentDataSourceParams {
   String consultId;
   String professionalId;
   String dateTime;
   String clientName;
   String organizationId;
 
-  ScheduleAppointmentCmsParams({
+  ScheduleAppointmentDataSourceParams({
     required this.consultId,
     required this.professionalId,
     required this.dateTime,

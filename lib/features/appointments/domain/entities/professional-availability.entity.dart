@@ -1,15 +1,15 @@
 import 'package:app_medagenda/features/appointments/domain/entities/professional.entity.dart';
 
-class ProfessionalAvailability {
+class ProfessionalAvailabilities {
   final ProfessionalEntity professional;
   final List<DateTime> availabilities;
 
-  ProfessionalAvailability({
+  ProfessionalAvailabilities({
     required this.professional,
     required this.availabilities,
   });
 
-  factory ProfessionalAvailability.fromJson(Map<String, dynamic> json) {
+  factory ProfessionalAvailabilities.fromJson(Map<String, dynamic> json) {
     List<DateTime> availabilitiesList = [];
 
     if (json['availabilities'] != null) {
@@ -19,7 +19,7 @@ class ProfessionalAvailability {
       }
     }
 
-    return ProfessionalAvailability(
+    return ProfessionalAvailabilities(
       professional: ProfessionalEntity.fromJson(json['professional']),
       availabilities: availabilitiesList,
     );

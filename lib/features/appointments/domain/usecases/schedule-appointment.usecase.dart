@@ -16,7 +16,7 @@ class ScheduleAppointmentUsecase
   Future<Either<Failure, AppointmentEntity>> call(
       ScheduleAppointmentParams params) {
     return appointmentRepository
-        .scheduleAppointment(ScheduleAppointmentCmsParams(
+        .scheduleAppointment(ScheduleAppointmentDataSourceParams(
       consultId: params.consultId,
       professionalId: params.professionalId,
       dateTime: params.dateTime,
