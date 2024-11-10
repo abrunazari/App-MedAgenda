@@ -25,31 +25,26 @@ class CategoryEntity {
   }
 
   factory CategoryEntity.fromJson(Map<String, dynamic> categoryJson) {
-    try {
-      List<ConsultEntity> consults =
-          (categoryJson['consults'] as List<dynamic>? ?? []).map((consultJson) {
-        return ConsultEntity.fromJson(consultJson);
-      }).toList();
+    List<ConsultEntity> consults =
+        (categoryJson['consults'] as List<dynamic>? ?? []).map((consultJson) {
+      return ConsultEntity.fromJson(consultJson);
+    }).toList();
 
-      return CategoryEntity(
-        id: categoryJson['id'] ?? 'default_id',
-        name: categoryJson['name'] ?? 'Unnamed Category',
-        createdAt: categoryJson['createdAt'] != null
-            ? DateTime.parse(categoryJson['createdAt'])
-            : DateTime.now(),
-        updatedAt: categoryJson['updatedAt'] != null
-            ? DateTime.parse(categoryJson['updatedAt'])
-            : DateTime.now(),
-        deletedAt: categoryJson['deletedAt'] != null
-            ? DateTime.parse(categoryJson['deletedAt'])
-            : null,
-        clinicId: categoryJson['clinicId'] ?? 'default_clinic_id',
-        consults: consults,
-      );
-    } catch (e) {
-      print("Erro ao criar CategoryEntity: $e");
-      rethrow;
-    }
+    return CategoryEntity(
+      id: categoryJson['id'] ?? 'default_id',
+      name: categoryJson['name'] ?? 'Unnamed Category',
+      createdAt: categoryJson['createdAt'] != null
+          ? DateTime.parse(categoryJson['createdAt'])
+          : DateTime.now(),
+      updatedAt: categoryJson['updatedAt'] != null
+          ? DateTime.parse(categoryJson['updatedAt'])
+          : DateTime.now(),
+      deletedAt: categoryJson['deletedAt'] != null
+          ? DateTime.parse(categoryJson['deletedAt'])
+          : null,
+      clinicId: categoryJson['clinicId'] ?? 'default_clinic_id',
+      consults: consults,
+    );
   }
   Map<String, dynamic> toJson() {
     return {

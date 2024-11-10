@@ -3,20 +3,17 @@ import 'package:app_medagenda/core/errors/failure.dart';
 import 'package:app_medagenda/features/appointments/domain/entities/clinic.entity.dart';
 import 'package:app_medagenda/features/appointments/domain/repositories/appointment.params.dart';
 import 'package:dartz/dartz.dart';
-import 'package:get/get.dart';
 
 class GetClinicInfoCmsLogic
     extends CmsLogic<ClinicEntity, GetClinicInfoCmsParams> {
   GetClinicInfoCmsLogic();
 
-  @override
-  Future<Either<Failure, ClinicEntity>> call(
-      GetClinicInfoCmsParams params) async {
-    final mockResponse = {
+  Map<String, dynamic> _generateMockResponse(String clinicId) {
+    return {
       'clinic': {
-        'id': params.clinicId,
+        'id': clinicId,
         'name': 'Integralis Saúde',
-        'imageUrl': 'assets/images/LogoMedAgenda.png',
+        'imageUrl': null,
         'organizationId': 'org_saude_total',
         'createdAt': DateTime.now()
             .subtract(const Duration(days: 365))
@@ -35,7 +32,7 @@ class GetClinicInfoCmsLogic
           'updatedAt': DateTime.now()
               .subtract(const Duration(days: 50))
               .toIso8601String(),
-          'clinicId': params.clinicId,
+          'clinicId': clinicId,
           'consults': [
             {
               'id': 'consult1',
@@ -60,7 +57,7 @@ class GetClinicInfoCmsLogic
           'updatedAt': DateTime.now()
               .subtract(const Duration(days: 40))
               .toIso8601String(),
-          'clinicId': params.clinicId,
+          'clinicId': clinicId,
           'consults': [
             {
               'id': 'consult3',
@@ -90,30 +87,13 @@ class GetClinicInfoCmsLogic
         },
       ],
     };
-
-    try {
-      final clinicEntity = ClinicEntity.fromJson(mockResponse);
-      return Right(clinicEntity);
-    } catch (e) {
-      return Left(ServerFailure(message: "Erro ao mockar a resposta: $e"));
-    }
   }
 
-  Failure handleError(Response response) {
-    String errorMessage = "Erro desconhecido";
-    switch (response.statusCode) {
-      case 400:
-        errorMessage = response.body['message'] ?? "Requisição inválida.";
-        break;
-      case 403:
-        errorMessage = "Esta clínica está desativada.";
-        break;
-      case 404:
-        errorMessage = "Clínica não encontrada.";
-        break;
-      default:
-        errorMessage = "Erro desconhecido.";
-    }
-    return ServerFailure(message: errorMessage);
+  @override
+  Future<Either<Failure, ClinicEntity>> call(
+      GetClinicInfoCmsParams params) async {
+    final mockResponse = _generateMockResponse(params.clinicId);
+    final clinicEntity = ClinicEntity.fromJson(mockResponse);
+    return Right(clinicEntity);
   }
 }

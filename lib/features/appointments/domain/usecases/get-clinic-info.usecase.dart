@@ -13,8 +13,8 @@ class GetClinicInfoUsecase
   GetClinicInfoUsecase({required this.appointmentRepository});
 
   @override
-  Future<Either<Failure, ClinicEntity>> call(GetClinicInfoParams params) async {
-    return await appointmentRepository
+  Future<Either<Failure, ClinicEntity>> call(GetClinicInfoParams params) {
+    return appointmentRepository
         .getClinicInfo(GetClinicInfoCmsParams(clinicId: params.clinicId));
   }
 }
@@ -25,5 +25,5 @@ class GetClinicInfoParams extends Equatable {
   const GetClinicInfoParams({required this.clinicId});
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [clinicId];
 }

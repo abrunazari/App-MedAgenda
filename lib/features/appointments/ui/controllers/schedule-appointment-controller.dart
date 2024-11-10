@@ -28,14 +28,16 @@ class AppointmentConfirmationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    initializeNameController();
+    loadStoredData();
+  }
 
+  void initializeNameController() {
     nameController = TextEditingController();
     nameController.addListener(() {
-      var nameLength = nameController.text.trim().length;
-      isNameValid(nameLength >= 3 && nameLength <= 50);
+      final nameLength = nameController.text.trim().length;
+      isNameValid.value = nameLength >= 3 && nameLength <= 50;
     });
-
-    loadStoredData();
   }
 
   void loadStoredData() {

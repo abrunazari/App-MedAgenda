@@ -38,8 +38,6 @@ class ConsultDetailsController extends GetxController {
     if (consultId.value.isNotEmpty) {
       selectedDate.value = selectedDateArg;
       fetchConsultAndProfessionals(consultId.value, selectedDateArg);
-    } else {
-      print('Consult ID or Date is missing');
     }
 
     clearStoredData();
@@ -57,7 +55,7 @@ class ConsultDetailsController extends GetxController {
     isLoading.value = false;
 
     result.fold((failure) {
-      print('Error fetching consult details: ${failure.message}');
+      print(failure);
     }, (consultAvailabilityData) {
       selectedDate.value = date;
       consultAvailability.value = consultAvailabilityData;

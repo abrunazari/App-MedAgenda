@@ -14,9 +14,11 @@ class GetConsultInfoUsecase
 
   @override
   Future<Either<Failure, ConsultAvailability>> call(
-      GetConsultInfoParams params) async {
-    return await appointmentRepository.getConsultInfo(GetConsultInfoCmsParams(
-        consultId: params.consultId, date: params.date));
+      GetConsultInfoParams params) {
+    return appointmentRepository.getConsultInfo(GetConsultInfoCmsParams(
+      consultId: params.consultId,
+      date: params.date,
+    ));
   }
 }
 
@@ -27,5 +29,5 @@ class GetConsultInfoParams extends Equatable {
   const GetConsultInfoParams({required this.consultId, required this.date});
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [consultId, date];
 }
