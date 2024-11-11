@@ -2,6 +2,7 @@ import 'package:app_medagenda/features/appointments/data/datasource/get-clinic-i
 import 'package:app_medagenda/features/appointments/data/datasource/get-consult-info.datasource.dart';
 import 'package:app_medagenda/features/appointments/data/datasource/schedule-appointment.datasource.dart';
 import 'package:app_medagenda/features/appointments/data/repositories/appointment_repository_impl.dart';
+import 'package:app_medagenda/features/appointments/domain/repositories/appointment_repository.dart';
 import 'package:app_medagenda/features/appointments/domain/usecases/get-clinic-info.usecase.dart';
 import 'package:app_medagenda/features/appointments/domain/usecases/get-consult-info.usecase.dart';
 import 'package:app_medagenda/features/appointments/domain/usecases/schedule-appointment.usecase.dart';
@@ -15,7 +16,7 @@ class InitialBinding implements Bindings {
     Get.lazyPut(() => GetConsultInfoDataSource(), fenix: true);
     Get.lazyPut(() => ScheduleAppointmentDataSource(), fenix: true);
 
-    Get.lazyPut(
+    Get.lazyPut<AppointmentRepository>(
         () => AppointmentRepositoryImpl(
             getClinicInfoDataSource: Get.find<GetClinicInfoDataSource>(),
             getConsultInfoDataSource: Get.find<GetConsultInfoDataSource>(),
@@ -25,15 +26,15 @@ class InitialBinding implements Bindings {
 
     Get.lazyPut(
         () => GetClinicInfoUsecase(
-            appointmentRepository: Get.find<AppointmentRepositoryImpl>()),
+            appointmentRepository: Get.find<AppointmentRepository>()),
         fenix: true);
     Get.lazyPut(
         () => GetConsultInfoUsecase(
-            appointmentRepository: Get.find<AppointmentRepositoryImpl>()),
+            appointmentRepository: Get.find<AppointmentRepository>()),
         fenix: true);
     Get.lazyPut(
         () => ScheduleAppointmentUsecase(
-            appointmentRepository: Get.find<AppointmentRepositoryImpl>()),
+            appointmentRepository: Get.find<AppointmentRepository>()),
         fenix: true);
   }
 }
